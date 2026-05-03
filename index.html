@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Statvo | Intelligence & Business Research</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #03050a; --cyan: #00f0ff; --blue: #0066ff; --purple: #8a2be2; --white: #ffffff; --text-muted: #8b9bb4; --border: rgba(255, 255, 255, 0.08); --card-bg: rgba(10, 15, 30, 0.4); --glass-border: rgba(255, 255, 255, 0.1); }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--white); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; position: relative; }
+body::before { content: ""; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.1) 0%, transparent 40%), radial-gradient(circle at 80% 20%, rgba(138, 43, 226, 0.08) 0%, transparent 30%); z-index: -2; pointer-events: none; }
+.grid-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.15; background-size: 50px 50px; background-image: linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px); mask-image: linear-gradient(to bottom, black 0%, transparent 80%); -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 80%); }
+#bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 6%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: rgba(3, 5, 10, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.logo { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 22px; letter-spacing: 2px; }
+.logo span { color: var(--cyan); text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+.nav-links { display: flex; gap: 40px; }
+.nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: 0.3s; }
+.nav-links a:hover { color: var(--cyan); text-shadow: 0 0 8px rgba(0, 240, 255, 0.4); }
+.nav-cta { background: rgba(0, 240, 255, 0.05); border: 1px solid var(--cyan); color: var(--cyan); padding: 10px 24px; border-radius: 4px; font-size: 12px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; transition: 0.3s; }
+.nav-cta:hover { background: var(--cyan); color: var(--bg); box-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 6% 80px; position: relative; z-index: 1; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(0, 240, 255, 0.3); background: rgba(0, 240, 255, 0.05); padding: 8px 20px; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan); margin-bottom: 40px; width: fit-content; letter-spacing: 0.1em; backdrop-filter: blur(4px); }
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+h1 { font-size: clamp(48px, 7vw, 92px); font-weight: 700; line-height: 1.05; letter-spacing: -2px; margin-bottom: 30px; max-width: 900px; }
+h1 em { font-style: normal; background: linear-gradient(90deg, var(--cyan), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; }
+.hero-sub { font-size: 18px; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin-bottom: 50px; font-weight: 400; }
+.hero-btns { display: flex; gap: 20px; flex-wrap: wrap; }
+.btn-primary { background: linear-gradient(90deg, var(--blue), #0044ff); color: var(--white); padding: 16px 36px; border-radius: 4px; font-size: 13px; font-weight: 600; text-decoration: none; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); text-transform: uppercase; text-align: center; cursor: pointer; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4); }
+.btn-outline { border: 1px solid var(--border); color: var(--white); padding: 16px 36px; border-radius: 4px; font-size: 13px; font-weight: 500; text-decoration: none; transition: 0.3s; backdrop-filter: blur(5px); text-align: center; }
+.btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.05); }
+.ticker-wrap { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; margin-top: 90px; background: rgba(3, 5, 10, 0.4); backdrop-filter: blur(10px); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+.ticker-track { display: flex; gap: 0; animation: ticker 30s linear infinite; width: max-content; }
+.ticker-item { display: flex; align-items: center; gap: 15px; padding: 0 50px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.ticker-item span { color: var(--cyan); text-shadow: 0 0 8px var(--cyan); }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.section-padding { padding: 140px 6%; position: relative; z-index: 1; }
+.section-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; }
+.section-title { font-size: clamp(32px, 4vw, 56px); font-weight: 700; letter-spacing: -1.5px; margin-bottom: 70px; line-height: 1.1; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.svc { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 50px 40px; border-radius: 12px; position: relative; overflow: hidden; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: 0.4s; }
+.svc::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--purple)); opacity: 0; transition: 0.4s; }
+.svc:hover { transform: translateY(-5px); border-color: rgba(0, 240, 255, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+.svc:hover::before { opacity: 1; }
+.svc-icon { font-size: 32px; margin-bottom: 30px; display: inline-block; filter: drop-shadow(0 0 10px rgba(0,240,255,0.4)); }
+.svc-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.2em; margin-bottom: 16px; }
+.svc h3 { font-size: 24px; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.5px; color: var(--white); }
+.svc p { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+.contact-inner { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; backdrop-filter: blur(16px); }
+.contact-form-box { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 8px; padding: 40px; display: flex; flex-direction: column; min-height: 350px; justify-content: center; }
+.form-input { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; color: var(--white); font-family: 'Space Grotesk', sans-serif; font-size: 14px; outline: none; transition: 0.3s; width: 100%; margin-bottom: 16px; }
+.form-input:focus { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0, 240, 255, 0.1); background: rgba(0, 240, 255, 0.02); }
+footer { padding: 40px 6%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #010205; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); }
+.reveal { opacity: 0; transform: translateY(30px) scale(0.98); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+@media(max-width: 768px) { .nav-links { display: none; } .contact-inner { grid-template-columns: 1fr; padding: 30px; } }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <div class="logo">STAT<span>VO</span></div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge reveal"><span class="badge-dot"></span>// Business Intelligence & Research</div>
+  <h1 class="reveal">Transform raw data into <br><em>strategic advantage.</em></h1>
+  <p class="hero-sub reveal">Statvo delivers enterprise-grade analytics, deep market research, and strategic consulting to drive data-backed decision making and scale your growth.</p>
+  <div class="hero-btns reveal">
+    <a href="#contact" class="btn-primary">Initialize Consultation</a>
+    <a href="#services" class="btn-outline">Explore Services</a>
+  </div>
+  <div class="ticker-wrap reveal">
+    <div class="ticker-track" id="ticker"></div>
+  </div>
+</section>
+
+<section class="section-padding" id="services">
+  <div class="section-eyebrow reveal">// Services</div>
+  <h2 class="section-title reveal">Architecting<br>intelligence.</h2>
+  <div class="services-grid">
+    <div class="svc reveal">
+      <div class="svc-icon">📈</div>
+      <div class="svc-num">01 / ANALYTICS & BI</div>
+      <h3>Visual Analytics</h3>
+      <p>Custom dashboards, KPI tracking, and automated reporting that transform fragmented data silos into real-time, interactive command centers.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-icon">🔍</div>
+      <div class="svc-num">02 / RESEARCH</div>
+      <h3>Business Research</h3>
+      <p>Deep market mapping, competitor analysis, and industry trend forecasting to keep your operations ahead of the curve.</p>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-icon">💼</div>
+      <div class="svc-num">03 / CONSULTING</div>
+      <h3>Strategic Consulting</h3>
+      <p>Data maturity assessments and actionable, step-by-step strategies designed to optimize efficiency and drive measurable growth.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-padding" id="contact">
+  <div class="contact-inner reveal">
+    <div>
+      <div class="section-eyebrow">// Initialize Connection</div>
+      <h2 style="font-size: 32px; margin-bottom: 20px;">Ready to scale?</h2>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 30px;">Deploy an inquiry via our secure intake form. The data will transmit directly to our analysts and we will respond within 24 hours.</p>
+      <a href="mailto:support@statvo.tech" class="btn-outline" style="display:inline-block;">support@statvo.tech</a>
+    </div>
+    
+    <div>
+      <label style="font-family:'JetBrains Mono'; font-size:10px; color:var(--cyan); text-transform:uppercase; margin-bottom: 12px; display: block;">Client Intake Portal</label>
+      <div class="contact-form-box">
+        
+        <!-- Form -->
+        <form id="statvo-form" action="https://formspree.io/f/mbdwdnkv" method="POST">
+            <input type="text" name="Name" class="form-input" placeholder="Name / Company" required>
+            <input type="email" name="Email" class="form-input" placeholder="Email Address" required>
+            <input type="tel" name="Mobile" class="form-input" placeholder="Mobile Number" required>
+            <textarea name="Message" class="form-input" style="height: 100px;" placeholder="Define your research or analytics requirements..." required></textarea>
+            <button type="submit" class="btn-primary" style="width: 100%; border: none;">Transmit Data</button>
+        </form>
+
+        <!-- Hidden Success Message -->
+        <div id="success-msg" style="display: none; text-align: center;">
+            <div style="font-size: 40px; margin-bottom: 10px;">🛡️</div>
+            <p style="color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 1px;">[ ✓ ] TRANSMISSION SUCCESSFUL</p>
+            <p style="color: var(--text-muted); font-size: 13px; margin-top: 10px;">Your parameters have been logged. Our engineers will reach out shortly.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo" style="font-size: 16px;">STAT<span>VO</span></div>
+  <p>© 2026 // SECURE CONNECTION ESTABLISHED</p>
+</footer>
+
+<script>
+// ── SPACE PARTICLES BACKGROUND ──
+const bgCanvas = document.getElementById('bg-canvas');
+const bgCtx = bgCanvas.getContext('2d');
+let W, H, particles = [];
+function resizeBg(){ W=bgCanvas.width=window.innerWidth; H=bgCanvas.height=window.innerHeight; }
+resizeBg(); window.addEventListener('resize', resizeBg);
+class Particle {
+  constructor(){ this.reset(); }
+  reset(){ this.x = Math.random()*W; this.y = Math.random()*H; this.vx = (Math.random()-0.5)*0.5; this.vy = (Math.random()-0.5)*0.5; this.r = Math.random()*1.5+0.5; this.alpha = Math.random()*0.5+0.1; }
+  update(){ this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset(); }
+}
+for(let i=0; i<100; i++) particles.push(new Particle());
+function drawBg(){
+  bgCtx.clearRect(0,0,W,H);
+  particles.forEach(p=>{
+    p.update(); bgCtx.beginPath(); bgCtx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    bgCtx.fillStyle = `rgba(0, 240, 255, ${p.alpha})`; bgCtx.fill();
+  });
+  for(let i=0; i<particles.length; i++){
+    for(let j=i+1; j<particles.length; j++){
+      const d = Math.hypot(particles[i].x-particles[j].x, particles[i].y-particles[j].y);
+      if(d<100){ bgCtx.beginPath(); bgCtx.moveTo(particles[i].x, particles[i].y); bgCtx.lineTo(particles[j].x, particles[j].y); bgCtx.strokeStyle = `rgba(138, 43, 226, ${0.1*(1-d/100)})`; bgCtx.stroke(); }
+    }
+  }
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// ── INFINITE TICKER ──
+const tickerItems = ['Market Research', 'Power BI', 'Strategic Consulting', 'Competitor Analysis', 'Data Dashboards', 'Predictive Modeling', 'KPI Tracking', 'Business Intelligence'];
+const track = document.getElementById('ticker');
+[...tickerItems, ...tickerItems].forEach(t => {
+  const d = document.createElement('div'); d.className = 'ticker-item'; d.innerHTML = `<span>//</span> ${t}`; track.appendChild(d);
+});
+
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── AJAX FORM SUBMISSION (PREVENTS REDIRECT) ──
+const form = document.getElementById("statvo-form");
+const successMsg = document.getElementById("success-msg");
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+  
+  // Change button text to show it's working
+  const btn = form.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = "Transmitting...";
+  btn.style.opacity = "0.7";
+  
+  const data = new FormData(event.target);
+  
+  try {
+    const response = await fetch(event.target.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    
+    if (response.ok) {
+      form.style.display = "none";
+      successMsg.style.display = "block";
+      form.reset();
+    } else {
+      alert("Error establishing connection. Please try again or email us directly.");
+      btn.innerHTML = originalText;
+      btn.style.opacity = "1";
+    }
+  } catch (error) {
+    alert("Transmission failed. Please check your network and try again.");
+    btn.innerHTML = originalText;
+    btn.style.opacity = "1";
+  }
+});
+</script>
+</body>
+</html>
