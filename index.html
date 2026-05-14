@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Statvo | Intelligence & Business Research</title>
+<title>Statvo | Strategic Consulting & Business Intelligence</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,6 +17,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 6%
 .logo { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 22px; letter-spacing: 2px; }
 .logo span { color: var(--cyan); text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
 .nav-links { display: flex; gap: 40px; }
+/* ── NAV: add new links here if you add more sections ── */
 .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: 0.3s; }
 .nav-links a:hover { color: var(--cyan); text-shadow: 0 0 8px rgba(0, 240, 255, 0.4); }
 .nav-cta { background: rgba(0, 240, 255, 0.05); border: 1px solid var(--cyan); color: var(--cyan); padding: 10px 24px; border-radius: 4px; font-size: 12px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; transition: 0.3s; }
@@ -50,6 +51,92 @@ h1 em { font-style: normal; background: linear-gradient(90deg, var(--cyan), var(
 .svc-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.2em; margin-bottom: 16px; }
 .svc h3 { font-size: 24px; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.5px; color: var(--white); }
 .svc p { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+
+/* ════════════════════════════════════════════════
+   ABOUT US SECTION
+   ─ To edit text: find the tags below and change copy
+   ─ To change the stats: find .about-stat blocks
+   ─ To change what-we-do bullets: find .about-pill items
+   ════════════════════════════════════════════════ */
+.about-section { padding: 140px 6%; position: relative; z-index: 1; }
+.about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-text-col {}
+.about-desc { font-size: 16px; color: var(--text-muted); line-height: 1.9; margin-bottom: 28px; }
+/* ── ABOUT: Edit each pill text to update "what we do" list ── */
+.about-pills { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+.about-pill { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan); border: 1px solid rgba(0, 240, 255, 0.25); background: rgba(0, 240, 255, 0.04); padding: 8px 16px; border-radius: 4px; letter-spacing: 0.08em; }
+/* ── ABOUT: CTA buttons ── */
+.about-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
+.about-right-col { display: flex; flex-direction: column; gap: 24px; }
+/* ── ABOUT: Stats block — edit number + label inside each .about-stat ── */
+.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.about-stat { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 36px 30px; backdrop-filter: blur(16px); position: relative; overflow: hidden; transition: 0.4s; }
+.about-stat::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--cyan)); opacity: 0; transition: 0.4s; }
+.about-stat:hover::after { opacity: 1; }
+.about-stat:hover { border-color: rgba(0, 240, 255, 0.2); transform: translateY(-3px); }
+.about-stat-num { font-family: 'JetBrains Mono', monospace; font-size: 36px; font-weight: 700; background: linear-gradient(90deg, var(--cyan), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 10px; }
+.about-stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em; line-height: 1.5; }
+/* ── ABOUT: Mission card below stats ── */
+.about-mission { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 36px; backdrop-filter: blur(16px); position: relative; overflow: hidden; }
+.about-mission::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--purple), var(--cyan)); }
+.about-mission-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; }
+.about-mission p { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+
+/* ════════════════════════════════════════════════
+   OUR WORK / PROJECTS SECTION
+   ─ To add a project: copy one .project-card block and update:
+       1. data-link="YOUR_GOOGLE_DRIVE_LINK"
+       2. The cover image URL inside .project-cover (background-image)
+       3. The title inside .project-title
+       4. The tag inside .project-tag
+   ─ To remove placeholder cards: delete the cards with class "project-placeholder"
+   ════════════════════════════════════════════════ */
+.work-section { padding: 140px 6%; position: relative; z-index: 1; }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; }
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.4s;
+  backdrop-filter: blur(16px);
+  position: relative;
+  text-decoration: none;
+  display: block;
+}
+.project-card:hover { transform: translateY(-6px); border-color: rgba(0, 240, 255, 0.35); box-shadow: 0 24px 50px rgba(0,0,0,0.6); }
+/* ── PROJECT CARD: Cover image area ── */
+.project-cover {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(0, 240, 255, 0.04); /* fallback if no image */
+  position: relative;
+  overflow: hidden;
+}
+/* Gradient overlay on cover */
+.project-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(3,5,10,0.85) 100%); }
+/* Hover glow on cover */
+.project-card:hover .project-cover::before { content: ''; position: absolute; inset: 0; background: rgba(0, 240, 255, 0.06); z-index: 1; }
+/* ── PROJECT CARD: Placeholder pattern shown when no image is set ── */
+.project-cover-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, rgba(0,240,255,0.03) 0px, rgba(0,240,255,0.03) 1px, transparent 1px, transparent 20px); }
+.project-cover-placeholder-icon { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(0,240,255,0.2); letter-spacing: 0.1em; }
+.project-body { padding: 24px 28px 28px; }
+/* ── PROJECT CARD: Edit tag and title text ── */
+.project-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
+.project-title { font-size: 18px; font-weight: 600; color: var(--white); letter-spacing: -0.3px; line-height: 1.4; margin-bottom: 14px; }
+.project-arrow { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan); letter-spacing: 0.1em; opacity: 0; transform: translateX(-6px); transition: 0.3s; }
+.project-card:hover .project-arrow { opacity: 1; transform: translateX(0); }
+/* ── "Add more" placeholder card style ── */
+.project-placeholder .project-cover { border-bottom: 1px dashed rgba(255,255,255,0.07); }
+.work-note { margin-top: 50px; text-align: center; }
+.work-note p { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(139,155,180,0.4); letter-spacing: 0.15em; }
+
+/* ════════════════════════════════════════════════
+   CONTACT SECTION (unchanged, kept as-is)
+   ════════════════════════════════════════════════ */
 .contact-inner { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; backdrop-filter: blur(16px); }
 .contact-form-box { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 8px; padding: 40px; display: flex; flex-direction: column; min-height: 350px; justify-content: center; }
 .form-input { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; color: var(--white); font-family: 'Space Grotesk', sans-serif; font-size: 14px; outline: none; transition: 0.3s; width: 100%; margin-bottom: 16px; }
@@ -57,7 +144,12 @@ h1 em { font-style: normal; background: linear-gradient(90deg, var(--cyan), var(
 footer { padding: 40px 6%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #010205; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); }
 .reveal { opacity: 0; transform: translateY(30px) scale(0.98); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
-@media(max-width: 768px) { .nav-links { display: none; } .contact-inner { grid-template-columns: 1fr; padding: 30px; } }
+@media(max-width: 768px) {
+  .nav-links { display: none; }
+  .contact-inner { grid-template-columns: 1fr; padding: 30px; }
+  .about-inner { grid-template-columns: 1fr; gap: 50px; }
+  .about-stats { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
@@ -65,17 +157,26 @@ footer { padding: 40px 6%; border-top: 1px solid var(--border); display: flex; j
 <div class="grid-bg"></div>
 <canvas id="bg-canvas"></canvas>
 
+<!-- ════════════════════════════════════════════════
+     NAVIGATION
+     ─ Add new nav links here when you add sections
+     ════════════════════════════════════════════════ -->
 <nav>
   <div class="logo">STAT<span>VO</span></div>
   <div class="nav-links">
     <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#work">Our Work</a>
     <a href="#contact">Contact</a>
   </div>
   <a href="#contact" class="nav-cta">Get in touch</a>
 </nav>
 
+<!-- ════════════════════════════════════════════════
+     HERO SECTION
+     ════════════════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-badge reveal"><span class="badge-dot"></span>// Business Intelligence & Research</div>
+  <div class="hero-badge reveal"><span class="badge-dot"></span>// Strategic Consulting &  Business Intelligence </div>
   <h1 class="reveal">Transform raw data into <br><em>strategic advantage.</em></h1>
   <p class="hero-sub reveal">Statvo delivers enterprise-grade analytics, deep market research, and strategic consulting to drive data-backed decision making and scale your growth.</p>
   <div class="hero-btns reveal">
@@ -87,37 +188,161 @@ footer { padding: 40px 6%; border-top: 1px solid var(--border); display: flex; j
   </div>
 </section>
 
+<!-- ════════════════════════════════════════════════
+     SERVICES SECTION
+     ════════════════════════════════════════════════ -->
 <section class="section-padding" id="services">
   <div class="section-eyebrow reveal">// Services</div>
   <h2 class="section-title reveal">Architecting<br>intelligence.</h2>
   <div class="services-grid">
     <div class="svc reveal">
       <div class="svc-icon">📈</div>
-      <div class="svc-num">01 / ANALYTICS & BI</div>
-      <h3>Visual Analytics</h3>
+      <div class="svc-num">01 / ANALYTICS & Research</div>
+      <h3>Data Analytics & Research</h3>
       <p>Custom dashboards, KPI tracking, and automated reporting that transform fragmented data silos into real-time, interactive command centers.</p>
     </div>
     <div class="svc reveal">
       <div class="svc-icon">🔍</div>
-      <div class="svc-num">02 / RESEARCH</div>
-      <h3>Business Research</h3>
+      <div class="svc-num">02 / </div>
+      <h3>Business Intelligence</h3>
       <p>Deep market mapping, competitor analysis, and industry trend forecasting to keep your operations ahead of the curve.</p>
     </div>
     <div class="svc reveal">
       <div class="svc-icon">💼</div>
       <div class="svc-num">03 / CONSULTING</div>
       <h3>Strategic Consulting</h3>
-      <p>Data maturity assessments and actionable, step-by-step strategies designed to optimize efficiency and drive measurable growth.</p>
+      <p>Data maturity assessments and actionable step-by-step strategies designed to optimize efficiency and drive measurable growth.</p>
     </div>
   </div>
 </section>
 
+<!-- ════════════════════════════════════════════════
+     ABOUT US SECTION
+     ─ EDIT TEXT: Change the <p class="about-desc"> paragraphs below
+     ─ EDIT PILLS: Change text inside each <span class="about-pill">
+     ─ EDIT STATS: Change the number in .about-stat-num and label in .about-stat-label
+     ─ EDIT MISSION CARD: Change text inside .about-mission p
+     ════════════════════════════════════════════════ -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+
+    <!-- LEFT COLUMN: Text content -->
+    <div class="about-text-col">
+      <div class="section-eyebrow reveal">// About Us</div>
+      <h2 class="section-title reveal" style="margin-bottom: 30px;">Turning data into<br><em style="font-style:normal; background: linear-gradient(90deg, var(--cyan), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">decisions.</em></h2>
+
+      <!-- ── ABOUT: Main description paragraphs — edit text here ── -->
+      <p class="about-desc reveal">
+        Statvo is a Strategic Consulting and Business Intelligence firm helping startups, SMEs, and growing organizations turn raw data into decisions that drive growth.
+      </p>
+      <p class="about-desc reveal">
+        We work across three core areas - data analytics and visualization, business and market research, and strategic consulting - delivering enterprise-grade work without the enterprise overhead.
+      </p>
+      <p class="about-desc reveal">
+        Whether you need a Power BI dashboard that actually gets used, a competitor landscape that informs your next move, or a data strategy built for where you're heading — we bring the analytical rigor to make it happen.
+      </p>
+
+     
+      <!-- ── ABOUT: CTA buttons ── -->
+      <div class="about-btns reveal">
+        <a href="#contact" class="btn-primary">Schedule a call</a>
+        <a href="https://www.linkedin.com/company/statvo" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Stats + Mission card -->
+    <div class="about-right-col">
+
+      <!-- ── ABOUT: Stats — edit the number and label text in each block ── -->
+      <div class="about-stats reveal">
+        <div class="about-stat">
+          <!-- Change "3" to the number of services/verticals you offer -->
+          <div class="about-stat-num">3</div>
+          <div class="about-stat-label">Core Service<br>Verticals</div>
+        </div>
+        <div class="about-stat">
+          <!-- Change to actual clients served once you have data -->
+          <div class="about-stat-num">MSME+</div>
+          <div class="about-stat-label">Startups &<br>SMEs Served</div>
+        </div>
+        <div class="about-stat">
+          <!-- Change to actual turnaround time or any metric -->
+          <div class="about-stat-num">12h</div>
+          <div class="about-stat-label">Avg. Response<br>Time</div>
+        </div>
+        <div class="about-stat">
+          <!-- Change to actual number of deliverables or projects -->
+          <div class="about-stat-num">BI</div>
+          <div class="about-stat-label">Enterprise-Grade<br>Intelligence</div>
+        </div>
+      </div>
+
+      <!-- ── ABOUT: Mission card — edit the text inside <p> ── -->
+      <div class="about-mission reveal">
+        <div class="about-mission-label">// Our Mission</div>
+        <p>
+          Enterprise-grade intelligence shouldn't be gatekept by enterprise budgets.
+          We exist to give growing businesses the analytical firepower to compete at the highest level with rigor, speed, and clarity baked into every deliverable.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     OUR WORK / PROJECTS SECTION
+     ─ HOW TO ADD A PROJECT:
+         1. Copy one entire <a class="project-card"> block
+         2. Set data-link="https://drive.google.com/your-link"
+         3. Set background-image: url('YOUR_COVER_IMAGE_URL') on .project-cover
+            (use a direct image URL — Google Drive, Imgur, etc.)
+         4. Edit .project-tag (e.g., "Research", "Dashboard", "Strategy")
+         5. Edit .project-title text
+     ─ HOW TO REMOVE PLACEHOLDERS:
+         Delete the <a> blocks that have the comment "PLACEHOLDER"
+     ════════════════════════════════════════════════ -->
+<section class="work-section" id="work">
+  <div class="section-eyebrow reveal">// Our Work</div>
+  <h2 class="section-title reveal">Intelligence<br>in action.</h2>
+
+  <div class="projects-grid">
+
+    <!-- ══ PROJECT CARD 1 — PLACEHOLDER: Replace with real project ══
+         Steps: set data-link, set background-image on .project-cover, update tag + title -->
+  <!-- Add the CSS below in your <head> or stylesheet -->
+<a class="project-card project-placeholder reveal" href="https://drive.google.com/drive/folders/1q9BHsI6l4wiu2TZ93lj5NYM0vRcdPXXY?usp=sharing" data-link="https://drive.google.com/drive/folders/1lHgOS-zZC0v0v4S-nJfqYqBGWTwOhXqb?usp=sharing" onclick="handleProjectClick(event, this)">
+  <div class="project-cover" style="background-image: url('https://raw.githubusercontent.com/Shwet-singh-26/STATVO/ba9c18c49538ed861e032b23539034c4f4317f54/SALES_DASH_BI.png');">
+  </div>
+  <div class="project-body">
+    <div class="project-tag">// Business Intelligence</div>
+    <div class="project-title">SALES ANALYTICS DASHBOARD</div>
+    <div class="project-arrow">View Report →</div>
+  </div>
+</a>
+<!PROJECT 4!>
+<a class="project-card project-placeholder reveal" href="https://drive.google.com/drive/folders/1lHgOS-zZC0v0v4S-nJfqYqBGWTwOhXqb?usp=sharing" data-link="https://drive.google.com/drive/folders/1lHgOS-zZC0v0v4S-nJfqYqBGWTwOhXqb?usp=sharing" onclick="handleProjectClick(event, this)">
+  <div class="project-cover" style="background-image: url('https://raw.githubusercontent.com/Shwet-singh-26/STATVO/main/UPI%20ANALYTICS%20dashboard%20(1).png');">
+  </div>
+  <div class="project-body">
+    <div class="project-tag">// DATA ANALYTICS & RESEARCH</div>
+    <div class="project-title">UPI PAYMENTS ANALYTICS </div>
+    <div class="project-arrow">View Report →</div>
+  </div>
+</a>
+</div> <!-- .projects-grid -->
+</section> <!-- .work-section -->
+<!-- ════════════════════════════════════════════════
+     CONTACT SECTION
+     ─ Formspree ID: mbdwdnkv — replace if form endpoint changes
+     ════════════════════════════════════════════════ -->
 <section class="section-padding" id="contact">
   <div class="contact-inner reveal">
     <div>
       <div class="section-eyebrow">// Initialize Connection</div>
       <h2 style="font-size: 32px; margin-bottom: 20px;">Ready to scale?</h2>
       <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 30px;">Deploy an inquiry via our secure intake form. The data will transmit directly to our analysts and we will respond within 24 hours.</p>
+      <!-- ── CONTACT: Update email below if it changes ── -->
       <a href="mailto:support@statvo.tech" class="btn-outline" style="display:inline-block;">support@statvo.tech</a>
     </div>
     
@@ -125,7 +350,7 @@ footer { padding: 40px 6%; border-top: 1px solid var(--border); display: flex; j
       <label style="font-family:'JetBrains Mono'; font-size:10px; color:var(--cyan); text-transform:uppercase; margin-bottom: 12px; display: block;">Client Intake Portal</label>
       <div class="contact-form-box">
         
-        <!-- Form -->
+        <!-- ── CONTACT FORM — Formspree handles submission ── -->
         <form id="statvo-form" action="https://formspree.io/f/mbdwdnkv" method="POST">
             <input type="text" name="Name" class="form-input" placeholder="Name / Company" required>
             <input type="email" name="Email" class="form-input" placeholder="Email Address" required>
@@ -134,7 +359,7 @@ footer { padding: 40px 6%; border-top: 1px solid var(--border); display: flex; j
             <button type="submit" class="btn-primary" style="width: 100%; border: none;">Transmit Data</button>
         </form>
 
-        <!-- Hidden Success Message -->
+        <!-- ── Success message shown after form submission ── -->
         <div id="success-msg" style="display: none; text-align: center;">
             <div style="font-size: 40px; margin-bottom: 10px;">🛡️</div>
             <p style="color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 1px;">[ ✓ ] TRANSMISSION SUCCESSFUL</p>
@@ -146,6 +371,9 @@ footer { padding: 40px 6%; border-top: 1px solid var(--border); display: flex; j
   </div>
 </section>
 
+<!-- ════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════ -->
 <footer>
   <div class="logo" style="font-size: 16px;">STAT<span>VO</span></div>
   <p>© 2026 // SECURE CONNECTION ESTABLISHED</p>
@@ -181,38 +409,32 @@ function drawBg(){
 drawBg();
 
 // ── INFINITE TICKER ──
-const tickerItems = ['Market Research', 'Power BI', 'Strategic Consulting', 'Competitor Analysis', 'Data Dashboards', 'Predictive Modeling', 'KPI Tracking', 'Business Intelligence'];
+const tickerItems = ['Market Research', 'Business Dashboards', 'Strategic Consulting', 'Data Analytics',   'KPI Tracking', 'Business Intelligence'];
 const track = document.getElementById('ticker');
 [...tickerItems, ...tickerItems].forEach(t => {
   const d = document.createElement('div'); d.className = 'ticker-item'; d.innerHTML = `<span>//</span> ${t}`; track.appendChild(d);
 });
 
-// ── SCROLL ANIMATIONS ──
+// ── SCROLL REVEAL ANIMATIONS ──
 const observer = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ── AJAX FORM SUBMISSION (PREVENTS REDIRECT) ──
+// ── AJAX FORM SUBMISSION (prevents page redirect) ──
 const form = document.getElementById("statvo-form");
 const successMsg = document.getElementById("success-msg");
-
 form.addEventListener("submit", async function(event) {
   event.preventDefault();
-  
-  // Change button text to show it's working
   const btn = form.querySelector('button[type="submit"]');
   const originalText = btn.innerHTML;
   btn.innerHTML = "Transmitting...";
   btn.style.opacity = "0.7";
-  
   const data = new FormData(event.target);
-  
   try {
     const response = await fetch(event.target.action, {
       method: form.method,
       body: data,
       headers: { 'Accept': 'application/json' }
     });
-    
     if (response.ok) {
       form.style.display = "none";
       successMsg.style.display = "block";
@@ -228,7 +450,24 @@ form.addEventListener("submit", async function(event) {
     btn.style.opacity = "1";
   }
 });
+
+// ════════════════════════════════════════════════
+// PROJECT CARD CLICK HANDLER
+// ─ Each card has a data-link attribute with the Google Drive URL
+// ─ This function reads that attribute and opens it in a new tab
+// ─ If no link is set (placeholder), it does nothing
+// ════════════════════════════════════════════════
+function handleProjectClick(event, card) {
+  event.preventDefault();
+  const link = card.getAttribute('data-link');
+  // Only open if a real link has been set
+  if (link && link.trim() !== '') {
+    window.open(link, '_blank', 'noopener,noreferrer');
+  }
+  // If link is empty (placeholder), do nothing
+}
 </script>
 </body>
 </html>
+
 
